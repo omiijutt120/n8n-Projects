@@ -1,0 +1,159 @@
+{
+  "name": "Wikipedia Search Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        -144
+      ],
+      "id": "7886c19b-7c67-478a-a0d7-78598eee05cf",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -1088,
+        -144
+      ],
+      "id": "1cfd7df8-0a5d-4b4a-8652-221c92e2da0d",
+      "name": "When chat message received",
+      "webhookId": "de1517fe-9fcd-4717-b2b6-7e464cf4e5ad"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -880,
+        -144
+      ],
+      "id": "be637e8d-69f4-43e2-8b2d-086fa2c31ef8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-v4-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        112
+      ],
+      "id": "9e529bcc-8029-4992-8546-f79a5fac123e",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "icT89yGM5PrpcfY1",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -832,
+        112
+      ],
+      "id": "69f3e096-c79a-42c0-8ada-7634e61dc604",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "url": "https://www.wikipedia.org/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        -672,
+        112
+      ],
+      "id": "8113cd04-839b-4ad8-807a-07a3ec2be39f",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fc259fcf-4981-4bad-95d5-1473bd10dfd2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7f3c6a678f5bb249189cbd44f487e2aa5089ff55d35cd76e1d18a5d5758c2547"
+  },
+  "nodeGroups": [],
+  "id": "a5s6XvuxFjPLlYih",
+  "tags": []
+}
